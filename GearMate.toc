@@ -1,0 +1,8 @@
+## Interface: 20501
+## Title: GearMate
+## Notes: <Tentative> Gear Utility
+## Author: andrew-brainerd
+## Version: 1.0
+
+embeds.xml
+GearMate.lua
