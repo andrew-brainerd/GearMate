@@ -3,6 +3,7 @@
 ## Notes: <Tentative> Gear Utility
 ## Author: andrew-brainerd
 ## Version: 1.0
+## SavedVariables: GearLocker
 
 embeds.xml
 GearMate.lua
