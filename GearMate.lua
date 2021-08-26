@@ -1,41 +1,20 @@
 GearMate = LibStub("AceAddon-3.0"):NewAddon("GearMate", "AceConsole-3.0", "AceEvent-3.0")
 
-function GearMate:OnInitialize()
-    GearLocker = {}
-    GearMate:Print("Welcome to GearMate")
-    GearMate:SaveGear()
-    GearMate:PrintGear()
-end
-
-function GearMate:PrintGear()
-    name = GetUnitName("player", true)
-
-    GearMate:Print("Gear for " .. name)
-    GearMate:Print("--------------------")
-
-    for i = 1, 23 do
-        local itemLink = GetInventoryItemLink("player", i)
-        local itemId = GetInventoryItemID("player", i)
-
-        if itemLink then 
-            GearMate:Print(itemId .. ": " .. itemLink)
-        end
-    end
-end
-
 function GearMate:SaveGear()
-    GearMate:Print("Saving gear...")
     name = GetUnitName("player", true)
+    GearMate:Print("Saving gear for " .. name .. "...")
 
-    GearLocker[name] = {}
+    local TempGear = {}
+    TempGear[name] = {}
 
     for i = 1, 23 do
         local link = GetInventoryItemLink("player", i)
         local itemId = GetInventoryItemID("player", i)
-        local itemName, itemLink, itemRarity = GetItemInfo(link)
 
         if itemId then
-            GearLocker[name][i] = {
+            local itemName, itemLink, itemRarity = GetItemInfo(link)
+            GearMate:Print(itemId .. ": " .. itemLink)
+            TempGear[name][i] = {
                 itemSlot = i,
                 itemId = itemId,
                 itemName = itemName,
@@ -43,8 +22,13 @@ function GearMate:SaveGear()
             }
         end
     end
+
+    GearLocker = TempGear
 end
 
-GearMate:RegisterEvent("PLAYER_LOGOUT", function()
+GearMate:RegisterEvent("PLAYER_ENTERING_WORLD", function()
+    name = GetUnitName("player", true)
+    GearLocker = {}
+    GearMate:Print("Welcome to GearMate " .. name .. "!")
     GearMate:SaveGear()
 end)
