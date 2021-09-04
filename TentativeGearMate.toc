@@ -1,6 +1,6 @@
 ## Interface: 20501
-## Title: <Tentative> GearMate
-## Notes: <Tentative> Gear Utility
+## Title: <Tentative> GearMate v1.0
+## Notes: <Tentative> Gear Updater
 ## Author: andrew-brainerd
 ## Version: 1.0
 ## SavedVariables: GearLocker
