@@ -1,5 +1,7 @@
 TentativeGearMate = LibStub("AceAddon-3.0"):NewAddon("<Tentative> GearMate", "AceConsole-3.0", "AceEvent-3.0")
 
+lastUpdateTime = nil
+
 function TentativeGearMate:SaveGear()
     TentativeGearMate:Print("Saving Gear Data")
 
@@ -32,7 +34,14 @@ function TentativeGearMate:SaveGear()
     GearLocker = TempGear
 end
 
-TentativeGearMate:RegisterEvent("PLAYER_ENTERING_WORLD", function()
-    GearLocker = {}
-    TentativeGearMate:SaveGear()
+function TentativeGearMate:ShouldUpdateGear()
+    return lastUpdateTime == nil or time() - lastUpdateTime > 1000
+end
+
+TentativeGearMate:RegisterEvent("GUILD_ROSTER_UPDATE", function()
+    local guildName = GetGuildInfo("player")
+
+    if (guildName == "Tentative" and TentativeGearMate:ShouldUpdateGear()) then
+        TentativeGearMate:SaveGear()
+    end
 end)
